@@ -1,0 +1,137 @@
+FORMAT: 1A
+HOST: https://demo.school-time.co/app/index.php/api
+
+# SchoolTime
+
+This collection of API provides various methods to pull data from SchoolTime.
+
+## Students [/students/{?id,board,class}] 
+
+### Get [GET]
+
+This gets list of student data from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+    + id (optional, number) ... Student ID  
+    + board (optional, string) ... Name of the board / sub-school
+    + class (optional, string) ... Name of the class belong to board/sub-school
+
++ Response 200 (application/json)
+
+
+## Admins [/admins/{?id}] 
+
+### Get [GET]
+
+This gets list of admin user data from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+    + id (optional, number) ... Admin ID  
+    
++ Response 200 (application/json) 
+
+## Accountant [/accountant/{?id}] 
+
+### Get [GET]
+
+This gets list of accountant user data from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+    + id (optional, number) ... Accountant ID  
+    
++ Response 200 (application/json) 
+
+## Staffs [/staffs/{?id,department,designation}] 
+
+### Get [GET]
+
+This gets list of teaching /non-teaching user data from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+    + id (optional, number) ... Staff ID
+    + department (optional, string) ... Name of the department
+    + designation (optional, string) ... Name of the designation / job title
+    
++ Response 200 (application/json) 
+
+## Finance-Collections [/finance/collections/{?board,class}] 
+
+### Get [GET]
+
+This gets list of collections data from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+   
+    + board (optional, string) ... Name of the board / school
+    + class (optional, string) ... Name of the class
+    
++ Response 200 (application/json) 
+
+## Finance-dues [/finance/dues/{?board,class}] 
+
+### Get [GET]
+
+This gets list of outstanding collections data from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+   
+    + board (optional, string) ... Name of the board / school
+    + class (optional, string) ... Name of the class
+    
++ Response 200 (application/json) 
+
+## Finance-Expenses [/finance/expense/{?category,from,to}] 
+
+### Get [GET]
+
+This gets list of collections data from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+   
+    + category (optional, string) ... Name of the expense category
+    + from (optional, date) ... Starting date to apply
+    + to (optional, date) ... Ending date to apply
+    
++ Response 200 (application/json) 
