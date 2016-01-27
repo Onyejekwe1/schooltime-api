@@ -3,13 +3,20 @@ HOST: https://demo.school-time.co/app/index.php/api
 
 # SchoolTime
 
-This collection of API provides various methods to pull data from SchoolTime.
+Welcome to SchoolTime’s API! You can use this API to access all our API endpoints, such as the Student API to look up student details, or the Staffs API to look up staff data related to a domain name (schoolname).
 
+The API is organized around REST. All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.This collection of API provides various methods to pull data from SchoolTime.
+
+*Note*
+
+    ST-API-KEY must be passed in the request header.
+    Comma can be used in the paramenter (http://demo.school-time.co/app/index.php/api/students?id=9,2,10)
+    
 ## Students [/students/{?id,board,class}] 
 
 ### Get [GET]
 
-This gets list of student data from your institue on SchoolTime. 
+This gets list of student data from your institue on SchoolTime. You can retrieve students by their ID, board, or class. One or more combinations of these parameters (id, board, class) can be passed to pull the data from SchoolTime. 
 
 + Request  (application/json)
 
@@ -24,12 +31,40 @@ This gets list of student data from your institue on SchoolTime.
 
 + Response 200 (application/json)
 
+        {
+            "name": "Kumar"
+            "birthday": "35646"
+            "sex": "male"
+            "religion": ""
+            "blood_group": ""
+            "address": "Hyderabad"
+            "phone": "9913456788"
+            "email": "chandradas.lokesh@stplglobal.com"
+            "nationality": null
+            "board": "State Board"
+            "class": "2"
+            "section": "B"
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
 
 ## Admins [/admins/{?id}] 
 
 ### Get [GET]
 
-This gets list of admin user data from your institue on SchoolTime. 
+This gets list of admin user data from your institue on SchoolTime. Comma separated *id* parameter can be passed to retrieve one ore more specific users data.
 
 + Request  (application/json)
 
@@ -42,11 +77,39 @@ This gets list of admin user data from your institue on SchoolTime.
     
 + Response 200 (application/json) 
 
+        {
+            "name": "Lokesh"
+            "qualification": "BTECH"
+            "birthday": "11/08/1995"
+            "doj": "11/02/2015"
+            "sex": "male"
+            "religion": ""
+            "blood_group": "a+"
+            "address": "test"
+            "phone": "9000675658"
+            "email": "lokeshdas251@gmail.com"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+
+
 ## Accountant [/accountant/{?id}] 
 
 ### Get [GET]
 
-This gets list of accountant user data from your institue on SchoolTime. 
+This gets list of accountant user data from your institue on SchoolTime. Comma separated *id* parameter can be passed to retrieve one ore more specific users data.
 
 + Request  (application/json)
 
@@ -59,11 +122,41 @@ This gets list of accountant user data from your institue on SchoolTime.
     
 + Response 200 (application/json) 
 
+        {
+            "name": "Rama"
+            "qualification": "MCom"
+            "birthday": "07/13/1995"
+            "doj": "09/11/2014"
+            "sex": "male"
+            "religion": ""
+            "blood_group": "a+"
+            "address": ""
+            "phone": "9630258741"
+            "email": "finance.user@school.com"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+        
+        
 ## Staffs [/staffs/{?id,department,designation}] 
 
 ### Get [GET]
 
-This gets list of teaching /non-teaching user data from your institue on SchoolTime. 
+This gets list of teaching/non-teaching user data from your institue on SchoolTime. 
+
+Available parameters to use are *id*, *department*, and *designation*. Combination of one or more of thse can used. Comma can be applied to filter down.
 
 + Request  (application/json)
 
@@ -78,11 +171,43 @@ This gets list of teaching /non-teaching user data from your institue on SchoolT
     
 + Response 200 (application/json) 
 
-## Finance-Collections [/finance/collections/{?board,class}] 
+        {
+            "name": "Avinash dfg"
+            "qualification": "B.TECH"
+            "birthday": "07/04/1979"
+            "doj": "03/26/2015"
+            "sex": "male"
+            "religion": ""
+            "blood_group": ""
+            "address": "Hyderabad"
+            "phone": ""
+            "email": "avinassgdfgh@school.com"
+            "department": "Physics"
+            "designation": "Professor"
+            "previous_experience": null
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+        
+## Collections [/collections/{?board,class}] 
 
 ### Get [GET]
 
-This gets list of collections data from your institue on SchoolTime. 
+This gets list of collections data from your institue on SchoolTime. i.e., the invoices that are paid by the parents will be listed in this.
+
+Parameters allowed are *board*, *class*.
 
 + Request  (application/json)
 
@@ -97,11 +222,40 @@ This gets list of collections data from your institue on SchoolTime.
     
 + Response 200 (application/json) 
 
-## Finance-dues [/finance/dues/{?board,class}] 
+        {
+            "invoice_code": "INV-1-19"
+            "name": "Nanee"
+            "board": "State Board"
+            "class": "3"
+            "section": "C"
+            "total_amount": "6346.00"
+            "payment_status": "Paid"
+            "date_added": "2015-11-30 00:07:21"
+            "due_date": "2015-12-25 00:00:00"
+            "date_paid": "2015-11-30 12:00:00"
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+
+## Dues [/dues/{?board,class}] 
 
 ### Get [GET]
 
-This gets list of outstanding collections data from your institue on SchoolTime. 
+This gets list of outstanding collections data from your institue on SchoolTime. i.e., the invoices against the payment is not done.
+
+Parameters allowed are *board*, *class*.
 
 + Request  (application/json)
 
@@ -116,11 +270,39 @@ This gets list of outstanding collections data from your institue on SchoolTime.
     
 + Response 200 (application/json) 
 
-## Finance-Expenses [/finance/expense/{?category,from,to}] 
+        {
+            "invoice_code": "INV-2-9"
+            "name": "Kumar"
+            "board": "State Board"
+            "class": "2"
+            "section": "B"
+            "total_amount": "3053.25"
+            "payment_status": "Unpaid"
+            "date_added": "2015-11-30 05:33:14"
+            "due_date": "2015-12-30 00:00:00"
+            "date_paid": null
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+## Expenses [/expenses/{?category,from,to}] 
 
 ### Get [GET]
 
-This gets list of collections data from your institue on SchoolTime. 
+This gets list of expense data from your institue on SchoolTime. 
+
+Available parameters are *category*, *from*, and *to*
 
 + Request  (application/json)
 
@@ -135,3 +317,11 @@ This gets list of collections data from your institue on SchoolTime.
     + to (optional, date) ... Ending date to apply
     
 + Response 200 (application/json) 
+
+        {
+            "category": "Vehicle Maintenance"
+            "title": "Vehicle Repair"
+            "amount": "500"
+            "method": "card"
+            "date": "2015-08-05 00:00:00"
+        }
