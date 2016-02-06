@@ -33,9 +33,9 @@ The API is organized around REST. All requests should be made over SSL. All requ
     
 ## Students [/students/{?id,board,class}] 
 
-### Get [GET]
+### GET [GET]
 
-This gets list of student data from your institue on SchoolTime. You can retrieve students by their ID, board, or class. One or more combinations of these parameters (id, board, class) can be passed to pull the data from SchoolTime. 
+This retrieves the list of student data from your institue on SchoolTime. You can retrieve students by their ID, board, or class. One or more combinations of these parameters (id, board, class) can be passed to pull the data from SchoolTime. 
 
 + Request  (application/json)
 
@@ -51,8 +51,9 @@ This gets list of student data from your institue on SchoolTime. You can retriev
 + Response 200 (application/json)
 
         {
+            "id": "9",
             "name": "Kumar"
-            "birthday": "35646"
+            "birthday": "23/06/2013"
             "sex": "male"
             "religion": ""
             "blood_group": ""
@@ -79,9 +80,158 @@ This gets list of student data from your institue on SchoolTime. You can retriev
             "message": "data could not be found"
         }
 
+### POST [POST]
+
+You can use this method to pass the student data to SchoolTime (to create new student). Below values can be passed in the request body with JSON format.
+
+    name (string)               : Student Name
+    email (string)              : Email ID of the Student. this will be used to Login
+    password (optional, string) : Password to login ST. If not provided the default password is Student@123
+    roll (optinonal, string)    : Roll number of the student 
+    board (optional, string)    : Name of the board / sub-school
+    class (optional, string)    : Name of the class belong to board/sub-school
+    section (optional, string)  : Section of the class
+    birthday (optional, date)   : Date of birth, if not provided current date reduced with 3 years and stored accordingly
+    sex (optional, string)      : Gender of the student, if not provided, "male" is default type
+    address (optional, string)  : Address details in one line
+    phone (optional, string)    : Phone number
+
+Note : 
+    Students created with API will be inactive by default. The admin user has to activate them.
+    This API as of now accepting one student data per request. Batch optoin will be added soon.
+
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
+    + Body 
+
+            {
+                "name": "Roshan Kumar",
+                "email":"chandradas.lokesh@stplglobal.com",
+                "birthday": "23/Jan/2013",
+                "sex": "male",
+                "religion": "Hindu",
+                "blood_group": "O Plus",
+                "address": "Hyderabad",
+                "phone": "9913456788",
+                "nationality": "Indian",
+                "board": "State Board",
+                "class": "2",
+                "section": "B"
+            }
+            
+
++ Response 201 (application/json)
+
+        {
+          "id": 616,
+          "name": "Roshan Kumar",
+          "email": "chandradas.lokesh@stplglobal.com",
+          "message": "Added Student"
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "false",
+            "message": "Email Already Exists. Choose PUT if you want to update existing student"
+        }
+
+### PUT [PUT]
+
+You can use this method to update existing the student data in SchoolTime. Below values can be passed in the request body with JSON format.
+
+    id (int)                    : Unique ID of the student from ST
+    name (optional, string)     : Student Name
+    email (optional, string)    : Email ID of the Student. this will be used to Login
+    password (optional, string) : Password to login ST
+    roll (optinonal, string)    : Roll number of the student
+    board (optional, string)    : Name of the board / sub-school
+    class (optional, string)    : Name of the class belong to board/sub-school
+    section (optional, string)  : Section of the class
+    birthday (optional, date)   : Date of birth, if not provided current date reduced with 3 years and stored accordingly
+    sex (optional, string)      : Gender of the student, if not provided, "male" is default type
+    address (optional, string)  : Address details in one line
+    phone (optional, string)    : Phone number
+
+Note : 
+    This API as of now accepting one student data per request. Batch optoin will be added soon.
+    
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
+    + Body 
+
+            {
+                "id": 617,
+                "name": "Roshan Kumar",
+                "birthday": "23/06/2013",
+                "sex": "male",
+                "religion": "Hindu",
+                "blood_group": "O-",
+                "address": "Hyderabad",
+                "phone": "9913456788",
+                "email": "chandradas.lokesh@stplglobal.com",
+                "nationality": null,
+                "board": "State Board",
+                "class": "2",
+                "section": "B"
+            }
+            
+
++ Response 201 (application/json)
+
+        {
+          "id": 617,
+          "message": "Student Updated"
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "status": "false",
+            "message": "Email Already Exists. Choose PUT if you want to update existing student"
+        }
+
 ## Admins [/admins/{?id}] 
 
-### Get [GET]
+### GET [GET]
 
 This gets list of admin user data from your institue on SchoolTime. Comma separated *id* parameter can be passed to retrieve one ore more specific users data.
 
@@ -126,7 +276,7 @@ This gets list of admin user data from your institue on SchoolTime. Comma separa
 
 ## Accountant [/accountant/{?id}] 
 
-### Get [GET]
+### GET [GET]
 
 This gets list of accountant user data from your institue on SchoolTime. Comma separated *id* parameter can be passed to retrieve one ore more specific users data.
 
@@ -169,9 +319,9 @@ This gets list of accountant user data from your institue on SchoolTime. Comma s
         }
         
         
-## Staffs [/staffs/{?id,department,designation}] 
+## Teachers [/teachers/{?id,department,designation}] 
 
-### Get [GET]
+### GET [GET]
 
 This gets list of teaching/non-teaching user data from your institue on SchoolTime. 
 
@@ -219,10 +369,153 @@ Available parameters to use are *id*, *department*, and *designation*. Combinati
             "status": false
             "message": "data could not be found"
         }
+
+### POST [POST]
+
+This methods help you to create teacher data of your school in SchoolTime
+   
+    name  (string)     : Teacher Name
+    email (string)    : Email ID of the Teacher. This will be used to Login
+    password (optional, string) : Password to login ST
+    birthday (optional, date)   : Date of birth, if not provided current date reduced with 3 years and stored accordingly
+    joindate (optional, date)   : Date of joining, if not provided current date reduced with 1 year and stored accordingly
+    sex (optional, string)      : Gender of the student, if not provided, "male" is default type
+    address (optional, string)  : Address details in one line
+    phone (optional, string)    : Phone number
+    religion (optional, string) : Religion name
+    blood_group(optional,string): Blood group of the teacher
+    qualification(optional, string) : Qualification of the teacher
+    experience (optional, string): Previous experince details of the teacher
+
+Note : 
+    This API as of now accepting one teacher data per request. Batch optoin will be added soon.
+
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
+    + Body
+         
+            {
+                "name": "Anand Mohan Pal",
+                "email": "anandmoham.pal@stplglobal.com",
+                "qualification": "B.TECH",
+                "birthday": "07/04/1989",
+                "joindate": "03/26/2015",
+                "sex": "male",
+                "religion": "Hindu",
+                "blood_group": "O+",
+                "address": "Hyderabad",
+                "phone": "+914065887875",
+                "previous_experience": "NONE"
+            } 
+
+    
++ Response 201 (application/json) 
+
+        {
+          "id": 150,
+          "name": "Anand Mohan Pal",
+          "email": "anandmoham.pal@stplglobal.com",
+          "message": "Added Teacher"
+        }
         
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+
++ Response 400 (application/json)
+ 
+        {
+          "status": "false",
+          "message": "Email Already Exists. Choose PUT if you want to update existing staff"
+        }
+        
+
+
+### PUT [PUT]
+
+This methods help you to create teacher data of your school in SchoolTime. Below values can be passed in JSON request body
+
+    name  (string)     : Teacher Name
+    email (string)    : Email ID of the Teacher. This will be used to Login
+    password (optional, string) : Password to login ST
+    birthday (optional, date)   : Date of birth, if not provided current date reduced with 3 years and stored accordingly
+    joindate (optional, date)   : Date of joining, if not provided current date reduced with 1 year and stored accordingly
+    sex (optional, string)      : Gender of the student, if not provided, "male" is default type
+    address (optional, string)  : Address details in one line
+    phone (optional, string)    : Phone number
+    religion (optional, string) : Religion name
+    blood_group(optional,string): Blood group of the teacher
+    qualification(optional, string) : Qualification of the teacher
+    experience (optional, string): Previous experince details of the teacher
+
+Note : 
+    This API as of now accepting one teacher data per request. Batch optoin will be added soon.
+    
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
+    + Body
+         
+            {
+                "id":150,
+                "name": "Anand Mohan Pal",
+                "email": "anandmoham.pal@stplglobal.com",
+                "qualification": "MCA",
+                "birthday": "07/07/1989",
+                "joindate": "04/28/2015",
+                "sex": "male",
+                "religion": "Hindu",
+                "blood_group": "O+",
+                "address": "Hyderabad",
+                "phone": "+914065887875",
+                "previous_experience": "1 Years"
+            } 
+
+    
++ Response 200 (application/json) 
+
+        {
+          "id": 150,
+          "message": "Teacher Updated"
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+
+
 ## Collections [/collections/{?board,class}] 
 
-### Get [GET]
+### GET [GET]
 
 This gets list of collections data from your institue on SchoolTime. i.e., the invoices that are paid by the parents will be listed in this.
 
@@ -270,7 +563,7 @@ Parameters allowed are *board*, *class*.
 
 ## Dues [/dues/{?board,class}] 
 
-### Get [GET]
+### GET [GET]
 
 This gets list of outstanding collections data from your institue on SchoolTime. i.e., the invoices against the payment is not done.
 
@@ -315,9 +608,10 @@ Parameters allowed are *board*, *class*.
             "status": false
             "message": "data could not be found"
         }
+        
 ## Expenses [/expenses/{?category,from,to}] 
 
-### Get [GET]
+### GET [GET]
 
 This gets list of expense data from your institue on SchoolTime. 
 
@@ -343,4 +637,301 @@ Available parameters are *category*, *from*, and *to*
             "amount": "500"
             "method": "card"
             "date": "2015-08-05 00:00:00"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+
+## Boards [/boards/{?board}] 
+
+### GET [GET]
+
+This gets list of boards/branch data from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+   
+    + board (optional, string) ... Name of the board / branch
+    
+    
++ Response 200 (application/json) 
+
+        [
+          {
+            "id": "1",
+            "name": "State Board",
+            "description": "State Board System"
+          },
+          {
+            "id": "2",
+            "name": "CBSE",
+            "description": "CBSE Board"
+          }
+        ]
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+        
+### POST [POST]
+
+This allows you to add a new board/branch data to SchoolTime
+    
+    name (string)                   : Name of the board / school branch
+    description (optinoal, string)  : Comments about the board
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
+    + Body
+
+            {
+                "name": "api test board",
+                "description" : "this board name added via api call"
+            }
+    
+    
++ Response 201 (application/json) 
+
+        {
+          "id": 14,
+          "name": "api test board",
+          "description": "this board name added via api call",
+          "message": "Added Board"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }        
+        
++ Response 400 (application/json)        
+
+        {
+          "status": "false",
+          "message": "Board name already exists"
+        }
+        
+### PUT [PUT]
+
+This allows you to update the existing board/branch data on SchoolTime. 
+    
+    id (int)                        : Board ID as per SchoolTime
+    name (string)                   : Name of the board / school branch
+    description (optinoal, string)  : Comments about the board
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
+    + Body
+
+            {
+                 "id": 14,
+                "name": "api board name update",
+                "description" : "this board name updated via api call"
+            }
+    
+    
++ Response 200 (application/json) 
+
+        {
+          "id": 14,
+          "message": "Updated Board"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }        
+        
+## Class [/class/{?board,class}] 
+
+### GET [GET]
+
+This gets list of classes/batches for the boards/branch from your institue on SchoolTime. 
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
++ Parameters
+   
+    + board (optional, string) ... Name of the board/branch
+    + class (optional, string) ... Name of the class
+    
+    
++ Response 200 (application/json) 
+
+        [
+          {
+            "id": "1",
+            "class": "1",
+            "board": "State Board"
+          },
+          {
+            "id": "2",
+            "class": "2",
+            "board": "State Board"
+          }
+        ]
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }
+        
+### POST [POST]
+
+This allows you to add a new board/branch data to SchoolTime
+    
+    name (string)   : Name of the class / batch
+    board (string)  : Name of the board / school branch
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
+    + Body
+
+            {
+                "name": "api batch",
+                "board": "api board name update"
+            }
+    
+    
++ Response 201 (application/json) 
+
+        {
+          "id": 18,
+          "name": "api batch",
+          "board": "api board name update",
+          "message": "Added Class"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
+        }        
+        
++ Response 400 (application/json)        
+
+        {
+          "status": "false",
+          "message": "Class name already exists in this board"
+        }
+        
+### PUT [PUT]
+
+This allows you to update the existing board/branch data on SchoolTime. 
+    
+    id (int)        : Class ID as per SchoolTime
+    name (string)   : Name of the class / batch
+    board (string)  : Name of the board / school branch
+
++ Request  (application/json)
+
+    + Headers
+    
+            ST-API-KEY: StRest@123
+
+    + Body
+
+            {
+                "id": 18,
+                "name": "api batch update",
+                "board": "State Board"
+            }
+    
+    
++ Response 200 (application/json) 
+
+        {
+          "id": 18,
+          "message": "Class Updated"
+        P}
+
++ Response 403 (application/json)
+
+        {
+            "status": "false"
+            "message": "Invalid API key"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "status": false
+            "message": "data could not be found"
         }
