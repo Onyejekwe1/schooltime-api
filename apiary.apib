@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: https://school-time.co/app/index.php/api
+HOST: https://school-time.co/app2/index.php/api
 
 # SchoolTime
 
@@ -29,13 +29,13 @@ The API is organized around REST. All requests should be made over SSL. All requ
 *Note*
 
     ST-API-KEY must be passed in the request header.
-    Comma can be used in the paramenter (https://school-time.co/app/index.php/api/students?id=9,2,10)
+    Comma can be used in the paramenter (https://school-time.co/app2/index.php/api/students?id=9,2,10)
     
 ## Students [/students/{?id,board,class}] 
 
 ### GET [GET]
 
-This retrieves the list of student data from your institue on SchoolTime. You can retrieve students by their ID, board, or class. One or more combinations of these parameters (id, board, class) can be passed to pull the data from SchoolTime. 
+This retrieves the list of student data from your institute on SchoolTime. You can retrieve students by their ID, board, or class. One or more combinations of these parameters (id, board, class) can be passed to pull the data from SchoolTime. 
 
 + Request  (application/json)
 
@@ -233,7 +233,7 @@ Note :
 
 ### GET [GET]
 
-This gets list of admin user data from your institue on SchoolTime. Comma separated *id* parameter can be passed to retrieve one ore more specific users data.
+This gets list of admin user data from your institute on SchoolTime. Comma separated *id* parameter can be passed to retrieve one ore more specific users data.
 
 + Request  (application/json)
 
@@ -278,7 +278,7 @@ This gets list of admin user data from your institue on SchoolTime. Comma separa
 
 ### GET [GET]
 
-This gets list of accountant user data from your institue on SchoolTime. Comma separated *id* parameter can be passed to retrieve one ore more specific users data.
+This gets list of accountant user data from your institute on SchoolTime. Comma separated *id* parameter can be passed to retrieve one ore more specific users data.
 
 + Request  (application/json)
 
@@ -323,7 +323,7 @@ This gets list of accountant user data from your institue on SchoolTime. Comma s
 
 ### GET [GET]
 
-This gets list of teaching/non-teaching user data from your institue on SchoolTime. 
+This gets list of teaching/non-teaching user data from your institute on SchoolTime. 
 
 Available parameters to use are *id*, *department*, and *designation*. Combination of one or more of thse can used. Comma can be applied to filter down.
 
@@ -517,7 +517,7 @@ Note :
 
 ### GET [GET]
 
-This gets list of collections data from your institue on SchoolTime. i.e., the invoices that are paid by the parents will be listed in this.
+This gets list of collections data from your institute on SchoolTime. i.e., the invoices that are paid by the parents will be listed in this.
 
 Parameters allowed are *board*, *class*.
 
@@ -565,7 +565,7 @@ Parameters allowed are *board*, *class*.
 
 ### GET [GET]
 
-This gets list of outstanding collections data from your institue on SchoolTime. i.e., the invoices against the payment is not done.
+This gets list of outstanding collections data from your institute on SchoolTime. i.e., the invoices against the payment is not done.
 
 Parameters allowed are *board*, *class*.
 
@@ -613,7 +613,7 @@ Parameters allowed are *board*, *class*.
 
 ### GET [GET]
 
-This gets list of expense data from your institue on SchoolTime. 
+This gets list of expense data from your institute on SchoolTime. 
 
 Available parameters are *category*, *from*, and *to*
 
@@ -657,7 +657,7 @@ Available parameters are *category*, *from*, and *to*
 
 ### GET [GET]
 
-This gets list of boards/branch data from your institue on SchoolTime. 
+This gets list of boards/branch data from your institute on SchoolTime. 
 
 + Request  (application/json)
 
@@ -798,7 +798,7 @@ This allows you to update the existing board/branch data on SchoolTime.
 
 ### GET [GET]
 
-This gets list of classes/batches for the boards/branch from your institue on SchoolTime. 
+This gets list of classes/batches for the boards/branch from your institute on SchoolTime. 
 
 + Request  (application/json)
 
